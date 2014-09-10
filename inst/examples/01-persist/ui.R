@@ -16,6 +16,9 @@ shinyUI(
 saved in your browser's local storage, meaning that it will still be there if you disconnect, close
 the tab, or even restart the Shiny process. This demonstrates shinyStore's ability to store persistent
 data in the user's browser."),
+      tags$p("This example also demonstrates data synchronization between tabs. Try opening another
+tab and changing the text value there. You should see the 'Value stored currently' change in this
+tab, as well."),
       HTML("<hr />"),
       helpText(HTML("<p>Created using <a href = \"http://github.com/trestletech/shinyStore\">shinyStore</a>."))
     ),

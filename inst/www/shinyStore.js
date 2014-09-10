@@ -3,6 +3,20 @@ shinyStore = (function(){
   
   var namespace;
   
+  function supports_html5_storage() {
+    try {
+      return 'localStorage' in window && window['localStorage'] !== null;
+    } catch (e) {
+      return false;
+    }
+  }
+  
+  if (!supports_html5_storage){
+    alert("ls not supported")
+    return;
+  }
+  
+  
   // Add callbacks which will be called with (key, val) when an update occurs.
   var callbacks = [];
   exports.addCallback = function(callback){
@@ -62,11 +76,22 @@ shinyStore = (function(){
   Shiny.addCustomMessageHandler('shinyStore', function(data) {
     $.each(data, function(key, val){
       var newKey = namespace + '\\' + key;
-      localStorage[newKey] = val;
-      exports.onUpdate(newKey, val);
+    localStorage[newKey] = val;
+    exports.onUpdate(newKey, val);
     });
   });
   
+  handleStorage = function(event){
+    exports.onUpdate(event.key, event.newValue);
+  }
+  
+  // Thanks to http://cggallant.blogspot.com/2010/07/html-5-web-storage.html
+  // Tested on modern Chrome, IE8 and IE9.
+  if (window.attachEvent) {
+     document.attachEvent('onstorage', handleStorage);
+  } else {
+      window.addEventListener('storage', handleStorage, false);
+  }
   
   return exports;
 })()
