@@ -36,7 +36,7 @@ shinyStore = (function(){
     for ( var i = 0; i < localStorage.length; i++ ) {
       var key = localStorage.key(i);
             
-      if (key.indexOf(namespace + '\\') == 0) {
+      if (key.indexOf(namespace + '\\') === 0) {
         obj[key.substring(namespace.length + 1)] = localStorage.getItem(key);
       }
     }
@@ -82,7 +82,9 @@ shinyStore = (function(){
   });
   
   handleStorage = function(event){
-    exports.onUpdate(event.key, event.newValue);
+    if (event.key.indexOf(namespace + '\\') === 0){
+      exports.onUpdate(event.key, event.newValue);
+    }
   }
   
   // Thanks to http://cggallant.blogspot.com/2010/07/html-5-web-storage.html

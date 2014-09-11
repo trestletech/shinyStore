@@ -32,6 +32,8 @@ A simple example to demonstrate the usage of the `shinyStore` package.
 Known Bugs
 -----------
 
+shinyStore has been tested to be compatible with IE8 and greater, and recent versions of Chrome, Firefox, and Safari.
+
 See the [Issues page](https://github.com/trestletech/shinyTree/issues) for information on outstanding issues. 
 
 License
