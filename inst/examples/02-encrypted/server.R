@@ -1,12 +1,17 @@
 library(shiny)
 library(shinyStore)
-library(PKI)
+
+pubKey <- PKI.load.key(file="test.key.pub")
 
 #' Define server logic required to generate a simple shinyStore example
 #' @author Jeff Allen \email{cran@@trestletech.com}
 shinyServer(function(input, output, session) {
   output$curText <- renderText({
-    input$store$text
+    txt <- input$store$text
+    if (ssErr(txt) > 0){
+      print("Encountered an error decrypting the text!")
+    }
+    return(txt)
   })
   
   observe({
@@ -16,6 +21,11 @@ shinyServer(function(input, output, session) {
       
       return()
     }
-    updateStore(session, "text", isolate(input$text))
+    
+    key <- NULL
+    if (isolate(input$encrypt)){
+      key <- pubKey
+    }
+    updateStore(session, "text", isolate(input$text), encrypt=key)
   })
 })

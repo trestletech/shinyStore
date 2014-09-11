@@ -3,7 +3,7 @@
 \alias{initStore}
 \title{Initialize shinyStore in an application's UI}
 \usage{
-initStore(id, namespace)
+initStore(id, namespace, privateKey = NULL)
 }
 \arguments{
   \item{id}{The identifier of the store (determines the

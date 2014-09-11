@@ -3,7 +3,7 @@
 \alias{updateStore}
 \title{Update local storage}
 \usage{
-updateStore(session, name, value)
+updateStore(session, name, value, encrypt = NULL)
 }
 \arguments{
   \item{session}{The session paramter from the

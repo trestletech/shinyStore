@@ -11,25 +11,29 @@
 #' will be passed through unbothered, or a more complex object which will be
 #' translated to JSON.
 #' @export
-updateStore <- function(session, name, value){
+updateStore <- function(session, name, value, encrypt=NULL){
   if (missing(name) || missing(value) || missing(session)){
     stop("Must provide a name, a value, and a session")
   }
   
   li <- list()
   
-  key <- options("shinyStore.key.pub")[[1]]
+  key <- encrypt
   if (is.null(key)){
     # No encryption, just assign.
-    li[[name]] <- value
+    li[[name]] <- list(encV=FALSE, data=value)
   } else{
     # We'll be encrypting the object, then.
     json <- RJSONIO::toJSON(list(data=value, user=session$user))
     
+    if (nchar(json) > 215){
+      warning("Text to encrypt is longer than 215 bytes, may fail.")
+    }
+    
     enc <- PKI.encrypt(charToRaw(json), key)
     char <- paste0(as.character(enc), collapse="")
     
-    li[[name]] <- char
+    li[[name]] <- list(encV="1.0", data=char)
   }
   
   session$sendCustomMessage("shinyStore", li)

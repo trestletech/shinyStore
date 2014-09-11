@@ -10,13 +10,18 @@
 #' storage. This is the only means by which we can separate data stored for
 #' different applications that are being hosted at the same (sub-)domain.
 #' @export
-initStore <- function(id, namespace){
+initStore <- function(id, namespace, privateKey=NULL){
   if (missing(id) || missing(namespace)){
     stop("Must provide both an ID and a namespace when initializing a store")
   }
   if (grepl("\\\\", namespace)){
     stop("namespace cannot contain a backslash (\\).")
   }
+  
+  if (!missing(privateKey)){
+    .global$privKey <- privateKey
+  }
+  
   tagList(
     singleton(tags$head(
       initResourcePaths(),

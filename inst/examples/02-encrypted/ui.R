@@ -1,10 +1,9 @@
 library(shiny)
 library(shinyStore)
+library(PKI)
 
 # Load the key stored in the file. See PKI.genRSAKey to create your own key.
-options("shinyStore.key.priv" = PKI.load.key(file="test.key"))
-
-options("shinyStore.key.pub" = PKI.load.key(file="test.key.pub"))
+privKey <- PKI.load.key(file="test.key")
 
 #' Define UI for application that demonstrates a simple shinyStore
 #' @author Jeff Allen \email{cran@@trestletech.com}
@@ -14,7 +13,7 @@ shinyUI(
     headerPanel("Encrypted shinyStore!"),
     
     sidebarPanel(
-      initStore("store", "shinyStore-ex2"), # Namespace must be unique to this application!
+      initStore("store", "shinyStore-ex2", privKey), # Namespace must be unique to this application!
       
       tags$p("An example of using encryption to secure local storage values."),
       tags$p("This ensures that the user's browser will never store the raw, unencrypted",
@@ -31,11 +30,13 @@ shinyUI(
     # Show the simple text value defined in the store.
     mainPanel(
       textInput("text", "Input:"),
+      checkboxInput("encrypt", label="Encrypt when storing?", value=TRUE),
       actionButton("save", "Save", icon("save")),
-      div("Value stored currently:"),
+      tags$hr(),
+      div("Value in input$store$text:"),
       textOutput("curText"),
       hr(),
-      div("Encrypted text stored locally:"),
+      div("Raw text stored locally:"),
       pre(id="encText"),
       # We don't provide an easy way to see the enrypted version, so we'll have
       # to cheat and use JavaScript to show this.
