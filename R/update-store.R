@@ -12,7 +12,9 @@ updateStore <- function(session, name, value){
     li[[name]] <- value
   } else{
     # We'll be encrypting the object, then.
-    enc <- PKI.encrypt(charToRaw(as.character(value)), key)
+    json <- RJSONIO::toJSON(list(data=value, user=session$user))
+    
+    enc <- PKI.encrypt(charToRaw(json), key)
     char <- paste0(as.character(enc), collapse="")
     
     li[[name]] <- char

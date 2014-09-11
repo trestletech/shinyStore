@@ -79,6 +79,10 @@ shinyStore = (function(){
   Shiny.addCustomMessageHandler('shinyStore', function(data) {
     $.each(data, function(key, val){
       var newKey = namespace + '\\' + key;
+    if (typeof val !== 'string'){
+      // If it's not a raw string, JSON.stringify
+      val = JSON.stringify(val)
+    }
     localStorage[newKey] = val;
     exports.onUpdate(newKey, val);
     });

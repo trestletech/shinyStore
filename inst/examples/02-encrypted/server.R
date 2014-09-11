@@ -1,12 +1,6 @@
 library(shiny)
 library(shinyStore)
-
-# Load the key stored in the file. See PKI.genRSAKey to create your own key.
-priv <- PKI.load.key(file="test.key")
-options("shinyStore.key.priv" = priv)
-
-pub <- PKI.load.key(file="test.key.pub")
-options("shinyStore.key.pub" = pub)
+library(PKI)
 
 #' Define server logic required to generate a simple shinyStore example
 #' @author Jeff Allen \email{cran@@trestletech.com}

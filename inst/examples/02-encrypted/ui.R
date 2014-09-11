@@ -1,24 +1,29 @@
 library(shiny)
 library(shinyStore)
 
+# Load the key stored in the file. See PKI.genRSAKey to create your own key.
+options("shinyStore.key.priv" = PKI.load.key(file="test.key"))
+
+options("shinyStore.key.pub" = PKI.load.key(file="test.key.pub"))
+
 #' Define UI for application that demonstrates a simple shinyStore
 #' @author Jeff Allen \email{cran@@trestletech.com}
 shinyUI(
   pageWithSidebar(
     # Application title
-    headerPanel("Simple shinyStore!"),
+    headerPanel("Encrypted shinyStore!"),
     
     sidebarPanel(
       initStore("store", "shinyStore-ex1"), # Namespace must be unique to this application!
       
-      tags$p("A simple shinyStore example."),
-      tags$p("Enter some text in the text box to the right and click 'Save'. The value will be
-saved in your browser's local storage, meaning that it will still be there if you disconnect, close
-the tab, or even restart the Shiny process. This demonstrates shinyStore's ability to store persistent
-data in the user's browser."),
-      tags$p("This example also demonstrates data synchronization between tabs. Try opening another
-tab and changing the text value there. You should see the 'Value stored currently' change in this
-tab, as well."),
+      tags$p("An example of using encryption to secure local storage values."),
+      tags$p("This ensures that the user's browser will never store the raw, unencrypted",
+             "value you're trying to store."),
+      tags$p("See the ", tags$a(href="https://github.com/trestletech/shinyStore#security", "Security"),
+             " section for a more complete discussion of the limitations of using local ",
+             "storage to store anything meaningfully private. The short version is: local ",
+             "storage will never be as secure as (HTTP-only) cookies and can only be ",
+             "considered secure if combined with such a cookie to authenticate the user."),
       HTML("<hr />"),
       helpText(HTML("<p>Created using <a href = \"http://github.com/trestletech/shinyStore\">shinyStore</a>."))
     ),
@@ -28,6 +33,12 @@ tab, as well."),
       textInput("text", "Input:"),
       actionButton("save", "Save", icon("save")),
       div("Value stored currently:"),
-      textOutput("curText")
+      textOutput("curText"),
+      hr(),
+      div("Encrypted text stored locally:"),
+      pre(id="encText"),
+      # We don't provide an easy way to see the enrypted version, so we'll have
+      # to cheat and use JavaScript to show this.
+      includeScript("showEncryptedText.js")
     )
   ))

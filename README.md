@@ -40,6 +40,18 @@ runApp(system.file("examples/01-persist", package="shinyStore"))
 
 A simple example to demonstrate the usage of the `shinyStore` package.
 
+
+#### 02-encrypted ([Live Demo](https://trestletech.shinyapps.io/ss-01-encrypted/))
+
+```
+library(shiny)
+runApp(system.file("examples/01-encrypted", package="shinyStore"))
+```
+
+An example demonstrating the use of encrypted storage to secure the data you're 
+writing to the user's browser. See the <a href ="#security">security section</a>
+for more details.
+
 Known Bugs
 -----------
 

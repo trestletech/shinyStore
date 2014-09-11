@@ -1,6 +1,12 @@
 library(shiny)
 library(shinyStore)
 
+# If you're never using encryption you won't need to worry about setting these.
+# We have an example in which we set these, so we need to make sure they're unset
+# now if we don't want to use encryption.
+options("shinyStore.key.priv" = NULL)
+options("shinyStore.key.pub" = NULL)
+
 #' Define UI for application that demonstrates a simple shinyStore
 #' @author Jeff Allen \email{cran@@trestletech.com}
 shinyUI(

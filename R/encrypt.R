@@ -10,15 +10,26 @@
       
       lapply(val, function(v){
         tryCatch({
+          msg <- ""
           suppressWarnings({
             # Parse a character string into raw hex... surely this could be easier/faster...
             arr <- strsplit(v, "")[[1]]
             arr <- split(arr, ceiling(seq_along(arr)/2))
             byt <- unlist(lapply(arr, function(x){ paste(x, collapse="") }))
             ra <- as.raw(strtoi(byt, base="16"))
-            return(rawToChar(PKI.decrypt(ra, key)))
+            msg <- rawToChar(PKI.decrypt(ra, key))
           })
+          obj <- RJSONIO::fromJSON(msg)
+          
+          if (!is.null(obj$user) && (is.null(shinysession$user) || obj$user != shinysession$user)){
+            print("Test")
+            warning("User mismatch! Refusing to decrypt shinyStore field.")
+            return(v)
+          } else {
+            return(obj$data)  
+          }
         }, error=function(e){
+          print(e)
           warning("Error decrypting field. Passing through unaltered.")
           return(v)
         })
@@ -28,19 +39,6 @@
   })
 }
 
-# Example
-
-# library(PKI)
-# 
-# key <- PKI.genRSAkey(2048)
-# enc <- PKI.encrypt(charToRaw("abc123456"), key)
-# char <- paste0(as.character(enc), collapse="")
-# 
-# # Parse a character string into raw hex... surely this could be easier/faster...
-# arr <- strsplit(char, "")[[1]]
-# arr <- split(arr, ceiling(seq_along(arr)/2))
-# byt <- unlist(lapply(arr, function(x){ paste(x, collapse="") }))
-# ra <- as.raw(strtoi(byt, base="16"))
-# 
-# rawToChar(PKI.decrypt(ra, key))
-# 
+.onUnload <- function(libpath){
+  shiny::removeInputHandler(type = "shinyStore")
+}
