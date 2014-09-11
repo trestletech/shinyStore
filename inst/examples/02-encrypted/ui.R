@@ -14,7 +14,7 @@ shinyUI(
     headerPanel("Encrypted shinyStore!"),
     
     sidebarPanel(
-      initStore("store", "shinyStore-ex1"), # Namespace must be unique to this application!
+      initStore("store", "shinyStore-ex2"), # Namespace must be unique to this application!
       
       tags$p("An example of using encryption to secure local storage values."),
       tags$p("This ensures that the user's browser will never store the raw, unencrypted",
