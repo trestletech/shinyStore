@@ -16,6 +16,17 @@ library(devtools)
 install_github("trestletech/shinyStore")
 ```
 
+Security
+--------
+
+TODO
+
+Information leakage, manipulation of stored data.
+
+For further reading on the security implications of "Web Storage", look at:
+
+ - https://blog.whitehatsec.com/web-storage-security/
+ - https://www.owasp.org/index.php/HTML5_Security_Cheat_Sheet#Local_Storage
 
 Getting Started
 ---------------

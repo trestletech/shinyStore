@@ -55,6 +55,9 @@ shinyStore = (function(){
     find: function(scope) {
       return $(scope).find(".shiny-store");
     },
+    getType: function(){
+      return "shinyStore";
+    },
     getValue: function(el) {
       return exports.extract()
     },
