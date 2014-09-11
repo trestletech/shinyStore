@@ -16,6 +16,10 @@ initStore(id, namespace, privateKey = NULL)
   storage. This is the only means by which we can separate
   data stored for different applications that are being
   hosted at the same (sub-)domain.}
+
+  \item{privateKey}{the private key to use to decrypt data.
+  Must be provided if you're going to have any encrypted
+  fields.}
 }
 \description{
 Though shinyStore doesn't have any user-visible elements,

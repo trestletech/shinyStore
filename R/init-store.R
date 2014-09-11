@@ -9,6 +9,8 @@
 #' the identifying prefix to use when storing any object in the browser's local
 #' storage. This is the only means by which we can separate data stored for
 #' different applications that are being hosted at the same (sub-)domain.
+#' @param privateKey the private key to use to decrypt data. Must be provided
+#' if you're going to have any encrypted fields.
 #' @export
 initStore <- function(id, namespace, privateKey=NULL){
   if (missing(id) || missing(namespace)){
