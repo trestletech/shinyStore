@@ -11,8 +11,9 @@ License: MIT
 Depends:
     R (>= 2.15.1)
 Imports:
-    shiny (>= 0.9.0)
+    shiny (>= 0.9.0),
+    RJSONIO (>= 1.0-0)
 Suggests:
-    testthat
+    PKI (>= 0.1-1)
 BugReports: https://github.com/trestletech/shinyStore/issues
 Roxygen: list(wrap = TRUE)

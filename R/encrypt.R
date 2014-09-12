@@ -26,7 +26,6 @@
             obj <- RJSONIO::fromJSON(msg)
             
             if (!is.null(obj$user) && (is.null(shinysession$user) || obj$user != shinysession$user)){
-              print("Test")
               warning("User mismatch! Refusing to decrypt shinyStore field.")
               attr(v, "shinyStoreErr") <- 0
               return(v)
