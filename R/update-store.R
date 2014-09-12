@@ -26,6 +26,11 @@ updateStore <- function(session, name, value, encrypt=NULL){
     # No encryption, just assign.
     li[[name]] <- list(encV=FALSE, data=value)
   } else{
+    if (is.null(session$user)){
+      # There's no user, so we can't couple our encrypted storage to an identity.
+      warning("Encryption requested, but the user is not authenticated. The encryption will be MUCH weaker without binding to a logged-in user.")
+    }
+    
     # We'll be encrypting the object, then.
     json <- RJSONIO::toJSON(list(data=value, user=session$user))
     
