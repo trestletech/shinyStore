@@ -4,7 +4,10 @@
     key <- .global$privKey
     if (is.null(key)){
       # No encryption, just return.
-      return(val)
+      lapply(val, function(v){
+        js <- RJSONIO::fromJSON(v)
+        return(js$data)
+      })
     } else{
       # Decrypt, then return.
       lapply(val, function(v){
