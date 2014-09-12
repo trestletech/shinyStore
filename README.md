@@ -19,7 +19,7 @@ install_github("trestletech/shinyStore")
 Getting Started
 ---------------
 
-#### 01-persist ([Live Demo](https://trestletech.shinyapps.io/ss-01-psersist/))
+#### 01-persist ([Live Demo](https://trestletech.shinyapps.io/ss-01-persist/))
 
 ```
 library(shiny)
