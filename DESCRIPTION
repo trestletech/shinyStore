@@ -17,3 +17,4 @@ Suggests:
     PKI (>= 0.1-1)
 BugReports: https://github.com/trestletech/shinyStore/issues
 Roxygen: list(wrap = TRUE)
+RoxygenNote: 5.0.1
