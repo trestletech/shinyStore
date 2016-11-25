@@ -88,6 +88,12 @@ shinyStore = (function(){
     });
   });
   
+  Shiny.addCustomMessageHandler('shinyDelete', function(key) {
+    var newKey = namespace + '\\' + key;
+    localStorage.removeItem(newKey);
+    exports.onUpdate(newKey, null);
+  });
+  
   handleStorage = function(event){
     if (event.key.indexOf(namespace + '\\') === 0){
       exports.onUpdate(event.key, event.newValue);
