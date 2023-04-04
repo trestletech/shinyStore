@@ -12,6 +12,7 @@
 #' @param privateKey the private key to use to decrypt data. Must be provided
 #' if you're going to have any encrypted fields.
 #' @export
+#' @import shiny
 initStore <- function(id, namespace, privateKey=NULL){
   if (missing(id) || missing(namespace)){
     stop("Must provide both an ID and a namespace when initializing a store")
