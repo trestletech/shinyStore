@@ -1,4 +1,5 @@
 
+#' @importFrom PKI PKI.decrypt
 .onLoad <- function(libname, pkgname){
   shiny::registerInputHandler("shinyStore", function(val, shinysession, name){
     key <- .global$privKey
@@ -21,7 +22,7 @@
                 arr <- split(arr, ceiling(seq_along(arr)/2))
                 byt <- unlist(lapply(arr, function(x){ paste(x, collapse="") }))
                 ra <- as.raw(strtoi(byt, base="16"))
-                msg <- rawToChar(PKI.decrypt(ra, key)) 
+                msg <- rawToChar(PKI::PKI.decrypt(ra, key)) 
             })
             obj <- RJSONIO::fromJSON(msg)
             
